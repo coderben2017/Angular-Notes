@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Angular练习 --day4</title>
+	<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" />
+	<style type="text/css">
+		
+	</style>
+</head>
+
+<body>
+	<div ng-app="myApp" ng-controller="myController">	
+
+		<div class="container">
+
+			<h3>用户表</h3>
+			<table class="table table-striped">
+				<thead>
+					<tr><th>编辑</th><th>名字</th><th>姓氏</th></tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="user in users">
+						<td>
+							<button class="btn" ng-click="editUser(user.id)">
+								<span class="glyphicon glyphicon-pencil"></span>编辑
+							</button>
+						</td>
+						<td>
+							{{ user.firstName }}
+						</td>
+						<td>
+							{{ user.lastName }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<hr />
+
+			<button class="btn btn-success" ng-click="editUser(0)">
+				<span class="glyphicon glyphicon-user"></span>创建新用户
+			</button>
+			<hr />
+
+			<h3 ng-show="edit">修改密码</h3>
+			<h3 ng-hide="edit">创建新用户</h3>
+			<hr />
+
+			<form class="form form-horizontal">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">名字：</label>
+					<div class="col-sm-10">
+						<input type="text" name="fName" ng-model="fName" ng-disabled="edit" placeholder="名字" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">姓氏：</label>
+					<div class="col-sm-10">
+						<input type="text" name="lName" ng-model="lName" ng-disabled="edit" placeholder="姓氏" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">原密码：</label>
+					<div class="col-sm-10">
+						<input type="password" name="psw1" ng-model="psw1" placeholder="密码" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">新密码：</label>
+					<div class="col-sm-10">
+						<input type="password" name="psw2" ng-model="psw2" placeholder="重复密码" />
+					</div>
+				</div>
+			</form>
+			<hr />
+
+			<!-- 对提交按钮设置非法时拦截（disabled） -->
+			<button class="btn btn-success" ng-disabled="error || incomplete">
+				<span class="glyphicon glyphicon-save"></span>{{ btnName }}
+			</button>
+
+		</div><!-- container -->
+
+	</div><!-- app -->
+	<p></p>
+
+
+	<!-- srcipts -->
+	<!-- <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script> -->
+	<!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+	<script src="./js/angular.min.js"></script>
+	<script type="text/javascript">
+
+		var app = angular.module("myApp", []);
+
+		app.controller("myController", function ($scope){
+			/* 初始化 */
+			$scope.users = [
+				{id: 1, firstName: "San", lastName: "Zhang"},
+				{id: 2, firstName: "Si", lastName: "Li"},
+				{id: 3, firstName: "Wu", lastName: "Wang"},
+				{id: 4, firstName: "Liu", lastName: "Zhao"}
+			];
+			$scope.edit = false;
+
+			$scope.editUser = function (id){
+				$scope.psw1 = "";
+				$scope.psw2 = "";
+				if( id === 0 ){
+					$scope.edit = false;
+					$scope.fName = "";
+					$scope.lName = "";
+					$scope.btnName = "创建";
+					$scope.incomplete = true;
+				}else{
+					$scope.edit = true;
+					$scope.fName = $scope.users[id-1].firstName;
+					$scope.lName = $scope.users[id-1].lastName;
+					$scope.btnName = "修改";
+				}
+			};
+
+			/* 对表单字段设置监控 */
+			$scope.$watch("fName", function (){ $scope.test() });
+			$scope.$watch("lName", function (){ $scope.test() });
+			$scope.$watch("psw1", function (){ $scope.test() });
+			$scope.$watch("psw2", function (){ $scope.test() });
+
+			/* 模型完整性及正确性验证函数 */
+			$scope.test = function (){ // 
+				if( $scope.psw2 !== $scope.psw1 ){
+					$scope.error = true;
+				}else{
+					$scope.error = false;
+				}
+				$scope.incomplete = false;
+				if( $scope.edit && 
+					( !$scope.fName.length || !$scope.lName.length || !$scope.psw1.length || !$scope.psw2.length ) ){
+					$scope.incomplete = true;// 有一个字段为空则标记incomplete为true，此时提交按钮disabled属性为true
+				}
+			}
+		});
+	</script>
+</body>
+</html>

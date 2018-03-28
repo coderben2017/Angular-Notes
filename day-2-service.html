@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Angular练习 --day2</title>
+	<style type="text/css">
+		
+	</style>
+</head>
+
+<body>
+	<div ng-app="myApp2-2" ng-controller="myController2-2">
+		<p>$location服务</p>
+		<p>完全路径：{{absUrl}}</p>
+		<p>端口：{{ port }}</p>
+		<p>协议：{{ protocol }}</p>
+		<hr />
+
+		<p>$http服务</p>
+		<p>姓名：{{ name }}</p>
+		<p>学校：{{ school }}</p>
+		<hr />
+
+		<p>$timeout服务 / $interval服务</p>
+		<p>{{timeoutStr + " / " + intervalStr}}</p>
+		<hr />
+
+		<p>自定义服务</p>
+		<p>原数：{{ oriNum }}</p>
+		<p>十六进制数：{{ hexNum }}</p>
+		<hr />
+
+		<p>在过滤器中使用服务</p>
+		<p>原数：542</p>
+		<p>过滤后的16进制数：{{ 542 | myFilter }}</p>
+		<hr />
+
+		<p>$watch服务</p>
+		<p><input type="text" ng-model="firstName" /></p>
+		<p><input type="text" ng-model="lastName" /></p>
+		<p>{{ fullName }}</p>
+		<hr />
+
+	</div>
+	<p>&nbsp;</p>
+
+	<!-- srcipts -->
+	<!-- <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script> -->
+	<!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+	<script src="./js/angular.min.js"></script>
+	<script type="text/javascript">
+		var app = angular.module("myApp2-2", []);
+		app
+		/* 自定义服务 */
+		.service("hexafy", function (){
+			this.trans = function (n){
+				return n.toString(16);
+			}
+		})
+		/* 在过滤器中使用服务 */
+		.filter("myFilter", ["hexafy", function (hexafy){
+			return function (x){
+				return hexafy.trans(x);
+			};
+		}])
+		.controller("myController2-2", function ($scope, $location, $http, $timeout, $interval, hexafy){
+			/* $location服务获取当前页面信息 */
+			$scope.absUrl = $location.absUrl();
+			$scope.port = $location.port();
+			$scope.protocol = $location.protocol();
+			
+			/* $http服务与后台交互数据 */
+			$http({
+				method: "POST",
+				url: "day-2-service.php",
+				data: {"name": "Ben Jin", "school": "Shandong University"}
+			}).then( function successCallback(response){
+				// console.log(response);
+				$scope.name = response.config.data.name;
+				$scope.school = response.config.data.school;
+			}, function errorCallback(response){
+				// 请求失败执行代码
+			} );
+
+			/* $timeout服务同window.setTimeOut(), $interval服务同window.setInterval() */
+			$scope.timeoutStr = "Hello World!";
+			$timeout( function (){
+				$scope.timeoutStr = "How are you today ?";
+			},3000 );
+			$interval( function (){
+				$scope.intervalStr = new Date().toLocaleString();
+			}, 1000 );
+
+			/* 自定义一个hexafy服务，它的trans函数执行16进制转换 */
+			$scope.oriNum = 255;
+			$scope.hexNum = hexafy.trans( $scope.oriNum );
+
+			/* $watch服务实现监听 */
+			$scope.firstName = ""; // 注：此处若不初始化，就会显示成undefined，界面乱码
+			$scope.lastName = "";　// 注：此处若不初始化，就会显示成undefined，界面乱码
+			$scope.$watch("firstName", function (){
+				$scope.fullName = $scope.firstName + " " + $scope.lastName;
+			});
+			$scope.$watch("lastName", function (){
+				$scope.fullName = $scope.firstName + " " + $scope.lastName;
+			});
+		});
+	</script>
+</body>
+</html>

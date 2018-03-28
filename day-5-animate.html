@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Angular练习 --day5</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+	<style type="text/css">
+		.container{
+			border: 2px dashed #999;
+			text-align: center;
+		}
+		.animateDiv{
+		  transition: all linear 0.5s;
+		  background-color: lightblue;
+		  height: 200px;
+		  width: 100%;
+		  position: relative;
+		  top: 0;
+		  left: 0;
+		}
+		.ng-hide{
+		  height: 0;
+		  width: 0;
+		  background-color: transparent;
+		  top: -200px;
+		  left: 200px;
+		}
+	</style>
+</head>
+
+<body>
+	<div ng-app="myApp" ng-controller="myController">	
+		<div class="container">
+			<p>隐藏下方div <input type="checkbox" ng-model="hideVal" value="false" /></p>
+			<div class="animateDiv" ng-hide="hideVal">我会逃跑啊！</div>
+		</div>
+	</div><!-- app -->
+	<p></p>
+
+
+	<!-- srcipts -->
+	<script src="https://cdn.bootcss.com/angular.js/1.4.6/angular.min.js"></script>
+	<script src="https://cdn.bootcss.com/angular.js/1.4.6/angular-animate.min.js"></script>
+	<script type="text/javascript">
+		var app = angular.module("myApp", ['ngAnimate']);
+		app.controller("myController", function ($scope){
+			
+		});
+	</script>
+</body>
+</html>

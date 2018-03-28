@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Angular练习 --day4</title>
+	<style type="text/css">
+		
+	</style>
+</head>
+
+<body>
+	<div ng-app="myApp" ng-controller="myController">	
+		<h3>单选框</h3>
+		<form method="" action="">
+			<input type="radio" name="" ng-model="radioVal" value="1" />1
+			<input type="radio" name="" ng-model="radioVal" value="2" />2
+			<input type="radio" name="" ng-model="radioVal" value="3" />3
+		</form>
+		<div ng-switch="radioVal">
+			<div ng-switch-when="1">
+				<p>值为1时出现</p>
+			</div>
+			<div ng-switch-when="2">
+				<p>值为2时出现</p>
+			</div>
+			<div ng-switch-when="3">
+				<p>值为3时出现</p>
+			</div>
+		</div>
+		<hr />
+
+		<h3>下拉列表</h3>
+		<select ng-model="optionVal">
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+		</select>
+		<div ng-switch="optionVal">
+			<div ng-switch-when="4">
+				<p>值为4时出现</p>
+			</div>
+			<div ng-switch-when="5">
+				<p>值为5时出现</p>
+			</div>
+			<div ng-switch-when="6">
+				<p>值为6时出现</p>
+			</div>
+		</div>
+		<hr />
+
+		<h3>表单（angular.copy）</h3>
+		<form method="" action="#">
+			<p>帐号：<input type="text" name="usr" ng-model="account.usr"/></p>
+			<p>密码：<input type="password" name="psw" ng-model="account.psw"/></p>
+			<p><input type="submit" /> <input type="button" value="重置" ng-click="reset()" /></p>
+			<p>account状态： {{ account }}</p>
+		</form>
+		<hr />
+
+		<h3>输入验证（空值 / 邮件格式错误）</h3>
+		<form method="" action="" name="login" novalidate="novalidate">
+			<p>
+				<input type="text" name="user" ng-model="user"  required="required" />
+				<span style="color: #f00" ng-show="login.user.$dirty && login.user.$invalid"><!-- 有填入记录且无效 -->
+					<span ng-show="login.user.$error.required">姓名是必须的</span><!-- 触发$error事件的required -->
+				</span>
+			</p>
+			<p>
+				<input type="email" name="email" ng-model="email" required="required">
+				<span style="color: #f00" ng-show="login.email.$dirty && login.email.$invalid">
+					<span ng-show="login.email.$error.required">邮箱是必须的</span>
+					<span ng-show="login.email.$error.email">邮箱格式不正确</span>
+				</span>
+			</p>
+		</form>
+	</div>
+	<p></p>
+
+
+	<!-- srcipts -->
+	<!-- <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script> -->
+	<!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+	<script src="./js/angular.min.js"></script>
+	<script type="text/javascript">
+		var app = angular.module("myApp", []);
+		app.controller("myController", function ($scope){
+			/* 表单重置 */
+			$scope.initAccount = { usr:"", psw:"" }; // 定义初始值
+			$scope.reset = function (){ // 设置重置功能为复制初始值
+				$scope.account = angular.copy( $scope.initAccount );
+			};
+			$scope.reset(); // 赋初值
+
+			/* 输入验证 */
+			$scope.user = "Ben";
+			$scope.email = "coderben2016@126.com";
+		});
+	</script>
+</body>
+</html>

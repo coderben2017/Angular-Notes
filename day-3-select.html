@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Angular练习 --day3</title>
+	<style type="text/css">
+
+	</style>
+</head>
+
+<body>
+	<div ng-app="myApp" ng-controller="myController">		
+		<!-- 下拉列表使用 ng-options -->
+		<h3>选择框（ng-options）</h3>
+		<!-- 在 select 标签中使用 ng-init 为 ng-model 赋初值 -->
+		<select ng-init="curOpt = opts[2]" ng-model="curOpt" ng-options="x for x in opts"></select>
+		<p>您选择的是：{{ curOpt }}</p>
+		<hr />
+
+		<h3>ng-options 与 ng-repeat 的区别：前者提取对象，后者提取字符串</h3>
+		<select ng-model="curSite" ng-options="x.site for x in sites"></select>
+		<p>您选择的是：{{ curSite.site + " / " + curSite.url }}</p>
+		<hr />
+		
+		<h3>在 ng-options 中使用键值对</h3>
+		<!-- x 为键，y为值，此处用'键'作为下拉选项，curName输出'值' -->
+		<select ng-model="curName" ng-options="x for (x, y) in names"></select>
+		<p>您选择的是：{{ curName }}</p>
+		<hr />
+
+		<h3>ng-options 提取复杂对象</h3>
+		<!-- 使用(x, y)中的y.brand（值的brand属性）作为下拉选项 -->
+		<select ng-model="curCar" ng-options="y.brand for (x, y) in cars"></select>
+		<p>您选择的是：{{ curCar.brand + " / " + curCar.color + " / " + (curCar.price | currency: "RMB ￥	") }}</p>		
+	</div>
+
+
+	<!-- srcipts -->
+	<!-- <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script> -->
+	<!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+	<script src="./js/angular.min.js"></script>
+	<script type="text/javascript">
+		var app = angular.module("myApp", []);
+		app.controller("myController", function ($scope){
+			$scope.opts = ["BMW", "Bugatti", "Ferrari"];
+
+			$scope.sites = [
+				{site: "Google", url: "www.google.com"},
+				{site: "Microsoft", url: "www.microsoft.com"},
+				{site: "Baidu", url: "www.baidu.com"}
+			];
+
+			$scope.names = {
+				name1: "Ben",
+				name2: "Mike",
+				name3: "Selina"
+			};
+
+			$scope.cars = {
+				car1: {brand: "BMW", color: "white", price: 800000},
+				car2: {brand: "Ferrari", color: "red", price: 2000000},
+				car3: {brand: "Bugatti", color: "black", price: 4000000}
+			};
+		});
+	</script>
+</body>
+</html>

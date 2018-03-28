@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Angular练习 --day5</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+	<style type="text/css">
+		.container{
+			border: 2px dashed #999;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div ng-app="myApp" ng-controller="myController">	
+		<div class="container">
+			<h3>AngularJS依赖注入核心组件 —— value / factory / service / provider / constant</h3><br />
+
+			<!-- 1、value + factory -->
+			<!-- 2、value + provider -->
+			<p>输入一个数字：<input type="number" ng-model="info" />&nbsp;&nbsp;
+					<button ng-click="square()">计算X<sup>2</sup></button></p><br />
+			<p>计算结果：<strong>{{ result }}</strong></p>
+		</div>
+	</div><!-- app -->
+	<p></p>
+
+
+	<!-- srcipts -->
+	<script src="https://cdn.bootcss.com/angular.js/1.4.6/angular.min.js"></script>
+	<script type="text/javascript">
+		var app = angular.module("myApp", []);
+		app
+		/* 配置默认变量 */
+		.value("defaultInfo", 5)
+		/* 方式1、通过工厂生产服务 */
+		.factory("MathService", function (){
+			var factory = {};
+			factory.multiply = function (a, b){
+				return a * b;
+			};
+			return factory;
+		})
+		/* 方式2、通过配置定义服务 */
+		// .config(function ($provide){
+		// 	$provide.provider("MathService", function(){
+		// 		this.$get = function (){
+		// 			var factory = {};
+		// 			factory.multiply = function (a, b){
+		// 				return a * b;
+		// 			};
+		// 			return factory;
+		// 		};
+		// 	})
+		// })
+		/* 绑定服务 */
+		.service("CalcService", function (MathService){
+			this.square  = function (a){
+				return MathService.multiply(a, a);
+			};
+		})
+		/* 在controller方法的参数中加入该服务和默认变量 */
+		.controller("myController", function ($scope, CalcService, defaultInfo){
+			$scope.info = defaultInfo;
+			$scope.result = CalcService.square($scope.info);
+			$scope.square = function (){
+				$scope.result = CalcService.square($scope.info);
+			}
+		});
+	</script>
+</body>
+</html>

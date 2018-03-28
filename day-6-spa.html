@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>AngularJS Single Page Application Demo</title>
+	<style type="text/css">
+		.container{
+			width: 600px;
+			margin: 0 auto;
+			text-align: center;
+			border: 1px solid #666;
+			background-color: #ff0;
+		}
+	</style>
+</head>
+	
+<body>
+	
+	<div class="container" ng-app="myApp" ng-controller="myController">
+			<h1>我的笔记</h1>
+			<textarea ng-model="note" cols="60" rows="16"></textarea>
+			<p><button ng-click="save()">保存</button>&nbsp;<button ng-click="clear()">清除</button></p>
+			<p>剩余字数：<b>{{ leaveLetterNum() }}</b></p>
+	</div>
+
+
+	<!-- srcipts -->
+	<script src="https://cdn.bootcss.com/angular.js/1.4.6/angular.min.js"></script>
+	<script src="https://cdn.bootcss.com/angular.js/1.4.6/angular-route.js"></script>
+	<script src="https://cdn.bootcss.com/angular.js/1.4.6/angular-animate.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<script type="text/javascript">
+
+		var app = angular.module("myApp", []);
+
+		app.controller("myController", function ($scope){
+
+			$scope.note = "";
+
+			$scope.leaveLetterNum = function (){// 注：此处若不使用方法而是直接计算，则会无法实时刷新
+				return 100 - $scope.note.length;
+			};
+
+			$scope.save = function (){
+				if($scope.leaveLetterNum() >= 0){
+					/* add save note code here */
+					alert("Save Successed!");
+					$scope.note = "";
+				}else{
+					alert("Please enter up to 100 letters.");
+				}
+			};
+
+			$scope.clear = function (){
+				$scope.note = "";
+			};
+
+		});
+	</script>
+</body>
+</html>

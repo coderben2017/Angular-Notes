@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Angular练习 --day2</title>
+	<style type="text/css">
+		
+	</style>
+</head>
+
+<body>
+	<div ng-app="myApp2" ng-controller="myController2">
+		<!-- 大小写 ＆ 日期 -->
+		<p>{{ title | uppercase }} / {{title | lowercase}}</p>
+		<p>{{1499711545000 | date:"yyyy-MM-dd HH:mm:ss"}}</p>
+		<hr />
+
+		<!-- 货币 -->
+		<p>数量：<input type="number" ng-model="num" /></p>
+		<p>单价：<input type="number" ng-model="price" /></p>
+		<p>总价：{{ price * num | currency }} / {{price * num | currency:"RMB ￥"}}</p>
+		<hr />
+
+		<!-- 过滤　＆　排序 -->
+		<p>过滤器：<input type="text" ng-model="test" /></p>
+		<ol>
+			<li ng-repeat="x in names | filter:test | orderBy:'car'">{{ x.car + "    " + (x.price | currency)}}</li>
+			<!-- 也可以指定过滤　——　filter:{'name': 'BMW'} -->
+		</ol>
+		<hr />
+
+		<!-- 自定义过滤器 -->
+		<p>原先字符串：<input type="text" ng-model="str" readonly="readonly" /></p>
+		<p>反转字符串：<input type="text" ng-model="str|reverse" readonly="readonly" /></p>
+		<sub>注：此处浏览器有报错，正在排查。。。</sub>
+		<hr />
+
+		<!-- 字符串截取　＆　小数点位数 -->
+		<h3>123456789</h3>
+		<p>前６位：{{"123456789" | limitTo:6}}　后４位：{{"123456789" | limitTo:-4}}</p>
+		<p>小数点保留３位（四舍五入）：{{123.456789 | number:3}}</p>
+	</div>
+
+
+	<!-- srcipts -->
+	<!-- <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script> -->
+	<!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+	<script src="./js/angular.min.js"></script>
+	<script type="text/javascript">
+		var app = angular.module("myApp2", []);
+		app.controller("myController2", function ($scope){
+			$scope.title = "Sale";
+			$scope.names = [
+				{car:'BMW', price:699999}, 
+				{car:'Ferrari', price:2380000}, 
+				{car:'Bugatti', price:8000000}
+			];
+			$scope.str = "Hello World!";
+		})
+		// 注：自定义过滤器可以实现多参数
+		.filter("reverse", function (){
+			return function (text){
+				return text.split("").reverse().join(""); // reverse翻转数组，故需要先split分割
+			}
+		});
+	</script>
+</body>
+</html>

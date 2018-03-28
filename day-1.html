@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Angular练习 --day1</title>
+	<style type="text/css">
+
+	</style>
+</head>
+
+<body>
+	<div ng-app="myApp1" ng-controller="myController" ng-init="person={location:'QingDao',age:22};
+																														car='BMW'">
+		<h3>数据绑定（{ { } } / ng-bind / ng-model）</h3>
+		<!-- 单项数据绑定1 -->																											
+		<p><span ng-bind="firstName"></span>（注：已与‘名字’一栏绑定）</p>										
+		<!-- 双向绑定 -->																		
+		<p>名字：<input type="text" ng-model="firstName" /></p>
+		<p>姓氏：<input type="text"	ng-model="lastName" /></p>
+		<p>地址：<input type="text" ng-model="person.location" /></p>
+		<!-- 单向数据绑定2 -->
+		<p>年龄：<input type="text" value={{person.age}} readonly="readonly" /></p>
+		<p>车型：<input type="text" value={{car}} readonly="readonly" /></p>
+		<hr />
+
+		<h3>重复标签（即克隆，常用于打印HTML数组）</h3>
+		<ul>
+			<li ng-repeat="x in firstNames">{{x + " " + lastName2}}</li>
+		</ul>
+		<hr />
+
+		<h3>自定义指令（4种方式）</h3>
+		<test1-directive></test1-directive>
+		<div class="test2-directive"></div>
+		<div test3-directive></div>
+		<!-- directive: test4-directive -->
+	</div>
+
+
+	<!-- srcipts -->
+	<!-- <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script> -->
+	<!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+	<script src="./js/angular.min.js"></script>
+	<script type="text/javascript">
+		// 定义模块
+		var app = angular.module("myApp1", []);
+		// 定义控制器程序
+		app.controller("myController", function ($scope, $rootScope){ // 控制器取代init来初始化数据
+			$scope.firstName = "Ben";
+			$scope.lastName = "Jin";
+			$scope.firstNames = ['Bob','John','Mike'];
+			$rootScope.lastName2 = "Tomas"; // 使用整个myApp域（全局变量）
+		})
+		// 自定义指令（注意指令名写法：HTML是横杠、js是驼峰）
+		.directive("test1Directive", function (){
+			return {
+				restrict: "AE",												// 限制（A-Attribute/ E-Element/ C-Class/ M-Message）
+				template: "use attribute"							// 模板（innerHTML）
+			}
+		})
+		.directive("test2Directive", function (){
+			return {
+				restrict: "C",
+				template: "use class"
+			}
+		})
+		.directive("test3Directive", function (){
+			return {
+				restrict: "AE",
+				template: "use element"
+			}
+		})
+		.directive("test4Directive", function (){
+			return {
+				restrict: "M",
+				// replace: true,  // 注释方式需要添加replace属性才能可见
+				template: "use message"
+			}
+		});
+	</script>
+</body>
+</html>

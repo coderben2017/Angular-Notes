@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Angular练习 --day3</title>
+	<style type="text/css">
+		table{
+			border-collapse: collapse;
+			text-align: center;
+			margin: 0 auto;
+		}
+		table tr:nth-child(1){
+			background-color: #ccc;
+		}
+		/* 奇偶行样式已使用AngularJS实现 */
+		/*
+		table tr:nth-child(even){
+			background-color: #eee;
+		}
+		table tr:nth-child(odd){
+			background-color: #fff;
+		}*/
+</style>
+</head>
+
+<body>
+	<div ng-app="myApp" ng-controller="myController">		
+		<table border="1">
+			<tr><td>序号</td><td>姓名</td><td>城市</td><td>国家</td></tr>
+			<tr ng-repeat="x in persons | orderBy: 'Country'" style="{{ $odd ? 'background-color:#eee' : '' }}">
+				<td>{{ $index + 1 }}</td>
+				<td>{{ x.Name }}</td>
+				<td>{{ x.City }}</td>
+				<td>{{ x.Country }}</td>
+			</tr>
+		</table>
+	</div>
+
+
+	<!-- srcipts -->
+	<!-- <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script> -->
+	<!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+	<script src="./js/angular.min.js"></script>
+	<script type="text/javascript">
+		var app = angular.module("myApp", []);
+		app.controller("myController", function ($scope, $http){
+			$scope.persons = [
+				{"Name":"Alfreds Futterkiste","City":"Berlin","Country":"Germany"},
+				{"Name":"Ana Trujillo Emparedados y helados","City":"México D.F.","Country":"Mexico"},
+				{"Name":"Antonio Moreno Taquería","City":"México D.F.","Country":"Mexico"},
+				{"Name":"Around the Horn","City":"London","Country":"UK"},
+				{"Name":"B's Beverages","City":"London","Country":"UK"},
+				{"Name":"Berglunds snabbköp","City":"Luleå","Country":"Sweden"},
+				{"Name":"Blauer See Delikatessen","City":"Mannheim","Country":"Germany"},
+				{"Name":"Blondel père et fils","City":"Strasbourg","Country":"France"},
+				{"Name":"Bólido Comidas preparadas","City":"Madrid","Country":"Spain"},
+				{"Name":"Bon app'","City":"Marseille","Country":"France"},
+				{"Name":"Bottom-Dollar Marketse","City":"Tsawassen","Country":"Canada"},
+				{"Name":"Cactus Comidas para llevar","City":"Buenos Aires","Country":"Argentina"},
+				{"Name":"Centro comercial Moctezuma","City":"México D.F.","Country":"Mexico"},
+				{"Name":"Chop-suey Chinese","City":"Bern","Country":"Switzerland"},
+				{"Name":"Comércio Mineiro","City":"São Paulo","Country":"Brazil"}
+			];
+		});
+	</script>
+</body>
+</html>

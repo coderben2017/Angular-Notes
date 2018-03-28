@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Angular练习 --day5</title>
+	<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" />
+	<style type="text/css">
+		.container{
+			border: 2px dashed #999;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div ng-app="myApp" ng-controller="myController">	
+		<div class="container">
+			<div class="include" ng-include="'day-5-include-sub.html'"></div><!-- 跨域访问HTML -->
+			<hr />
+			<div class="include" ng-include="'day-5-include-sub.php'"></div><!-- 跨域访问后端PHP -->
+		</div>
+	</div><!-- app -->
+	<p></p>
+
+
+	<!-- srcipts -->
+	<!-- <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script> -->
+	<!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+	<script src="./js/angular.min.js"></script>
+	<script type="text/javascript">
+		var app = angular.module("myApp", []);
+		app.controller("myController", function ($scope){
+			
+		});
+	</script>
+</body>
+</html>
