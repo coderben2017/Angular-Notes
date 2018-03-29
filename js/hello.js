@@ -196,14 +196,15 @@ myModule
 	.controller('httpCtrl', ['$scope', '$http', function($scope, $http){
 		$scope.people = []
 
-		$http({
-			method: 'GET',
-			url: '../json/people.json'
-		}).success(function(res) {
-			$scope.people = res['data']['people']
-		}).error(function(err) {
-			console.error(error)
-		})
+		// GitHub原因先注释掉
+		// $http({
+		// 	method: 'GET',
+		// 	url: '../json/people.json'
+		// }).success(function(res) {
+		// 	$scope.people = res['data']['people']
+		// }).error(function(err) {
+		// 	console.error(error)
+		// })
 
 		// new version of Angular
 		// $http.get('../json/people.json').then(function(res) {

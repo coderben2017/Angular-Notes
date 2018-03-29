@@ -3,10 +3,10 @@ var appModule = angular.module('ServiceApp', [])
 appModule.factory('userListService', ['$http', 
 	function($http){
 		var doRequest = function () {
-			return $http({
-				method: 'GET',
-				url: '../json/people.json'
-			})
+			// return $http({
+			// 	method: 'GET',
+			// 	url: '../json/people.json'
+			// })
 		}
 		return {
 			getUserList: function() {
