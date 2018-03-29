@@ -86,3 +86,7 @@ Angular 1.x / 2学习笔记
 ### Day 13
 - [AngularJS新体验（慕课网-大漠穷秋-AnguarJS实战）](https://coderben2017.github.io/Angular-Notes/hello.html)
 - 2018/03/28 22:11
+
+### Day 14
+- [AngularJS $http](https://coderben2017.github.io/Angular-Notes/http.html)
+- 2018/03/29 11:38

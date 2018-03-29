@@ -191,3 +191,32 @@ myModule
 			}
 		}
 	})
+
+	// $http依赖
+	.controller('httpCtrl', ['$scope', '$http', function($scope, $http){
+		$scope.people = []
+
+		$http({
+			method: 'GET',
+			url: '../json/people.json'
+		}).success(function(res) {
+			$scope.people = res['data']['people']
+		}).error(function(err) {
+			console.error(error)
+		})
+
+		// new version of Angular
+		// $http.get('../json/people.json').then(function(res) {
+		// 	$scope.people = res['data']['people']
+		// }, function(err) {
+		// 	console.error(err)
+		// })
+	}])
+
+
+	// 自定义filter
+	.filter('greetFilter', function() {
+		return function(item) {
+			return 'hello ' + item
+		}
+	})

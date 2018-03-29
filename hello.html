@@ -14,16 +14,23 @@
 			cursor: pointer;
 			border: 2px solid #ff3;
 		}
+		h4 {
+			background-color: #fc3;
+		}
 	</style>
 </head>
 <body>
 
 	<div ng-app="HelloModule" ng-controller="Hello">
 
-		<input type="number" ng-model="greeting.text" />
-		<p ng-click="tip()">{{greeting.text}}, Angular</p>
+		<div class="content">
+			<h4>AngularJS双向绑定</h4>
+			<input type="number" ng-model="greeting.text" />
+			<p ng-click="tip()">{{greeting.text}}, Angular</p>
+		</div>
 
 		<div ng-controller="EventController" class="content">
+			<h4>$emit and $broadcast in directive</h4>
 			root scope: {{count}}
 			<ul ng-repeat="i in [1]" ng-controller="EventController">
 				<button ng-click="$emit('click')">emit</button>
@@ -90,6 +97,7 @@
 
 
 		<div class="content">
+			<h4>AEMC in directive restrict</h4>
 			<hello>
 				<div>transclude</div>
 			</hello>
@@ -100,6 +108,7 @@
 		</div>
 
 		<div class="content">
+			<h4>reuse directive</h4>
 			<div ng-controller="LinkCtrl">
 				<loader howToLoad="loadData()" howToStop="stopLoad()">加载数据 {{tip}}</loader>
 			</div>
@@ -109,12 +118,14 @@
 		</div>
 
 		<div class="content">
+			<h4>interactive directive</h4>
 			<superman strength>superman 1</superman>
 			<superman strength speed>superman 2</superman>
 			<superman strength speed light>superman 3</superman>
 		</div>
 
 		<div ng-controller="DrinkCtrl" class="content">
+			<h4>@, = and & in directive</h4>
 			<!-- <drink choose="{{cheer}}"></drink> -->
 			<drink choose="cheer"></drink>
 
@@ -124,10 +135,26 @@
 		</div>
 
 		<div class="content">
+			<h4>mock input by contenteditable div</h4>
 			<div contenteditable="true" ng-model="info"></div>
 			model = {{info}}
 		</div>
 
+
+		<div ng-controller="httpCtrl" class="content">
+			<h4>get data by $http from json file</h4>
+			<p ng-repeat="(index, person) in people">
+				No.{{index + 1}}&emsp;name: {{person.name}}&emsp;age: {{person.age}}
+			</p>
+		</div>
+
+		<div class="content">
+			<h4>pipe / 自定义filter</h4>
+			<p>{{1522293788466 | date}}</p>
+			<p>{{1522293788466 | date: 'M-dd-yyyy @ h:mma'}}</p><!-- @不是api -->
+			<p>{{1522293788466 | date: 'yyyy-MM-dd hh:mm:ss'}}</p>
+			<p>{{'Bob' | greetFilter}}</p><!-- 必须加单引号表示过滤string类型 -->
+		</div>
 	</div>
 
 	<script type="text/javascript" src="https://cdn.bootcss.com/angular.js/1.3.0/angular.js"></script>

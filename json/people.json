@@ -1,0 +1,8 @@
+{
+	"data": {
+		"people": [
+			{"name": "Jack", "age": "19"},
+			{"name": "Bob", "age": "20"}
+		]
+	}
+}
